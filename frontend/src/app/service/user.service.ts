@@ -19,7 +19,7 @@ export class UserService {
   }
 
   public signUp(user: UserModel) {
-    return this.httpClient.post(this.baseURI, user);
+    return this.httpClient.post(this.baseURI + '/signup', user);
   }
 
 }

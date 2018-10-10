@@ -12,8 +12,8 @@ router.post('/authenticate', async (ctx) => {
     // Search the user based on email and (if necessary) username.
     const user = await searchUser(usernameOrEmail);
     // If the user is not found or password is not correct 403 status code.
-    if (!user) ctx.throw('Unknown username or email', 403);
-    if (password !== user.password) ctx.throw('The password is not correct!', 403);
+    if (!user) ctx.throw('Unknown username or email', 401);
+    if (password !== user.password) ctx.throw('The password is not correct!', 401);
     // Read the secret key and generate token.
     const secretKey = readConfigFromFile('SECRET_KEY', '../auth-configs');
     const token = await jwt.sign({user}, secretKey);

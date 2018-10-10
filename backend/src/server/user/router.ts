@@ -19,7 +19,7 @@ router.get('/email/:email', async (ctx) => {
     ctx.body = user;
 });
 
-router.post('/', async (ctx) => {
+router.post('/signup', async (ctx) => {
     const user = ctx.request.body;
     const userHandler = new UserHandler();
     const createdUser = await userHandler.createNewUserOnSignUp(user);
