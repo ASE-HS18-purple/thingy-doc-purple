@@ -1,9 +1,8 @@
 import * as Router from 'koa-router';
-import {artifactRoutes} from '../artifact';
+import {userRouter} from '../user';
 
 const router: any = new Router();
 
-router.use('/artifacts', artifactRoutes);
+router.use('/users', userRouter);
 
 export const routes = router.routes();
-
