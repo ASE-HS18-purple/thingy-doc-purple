@@ -2,7 +2,7 @@ import {User} from './model';
 
 export class UserHandler {
 
-    public async searchUserByUsername(username: string) {
+    public async searchUserByUsername(username: string){
         return await User.findOne({
             username: username,
         });
@@ -19,9 +19,4 @@ export class UserHandler {
         searchedUser = !searchedUser ? await this.findUserByEmail(user.email) : searchedUser;
         return !searchedUser ? await User.create(user) : null;
     }
-
-    public async findAllUsers() {
-        return await User.find();
-    }
-
 }

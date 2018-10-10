@@ -27,10 +27,4 @@ router.post('/', async (ctx) => {
     ctx.response.status = createdUser ? 201 : 400;
 });
 
-router.get('/', async (ctx) => {
-    const userHandler = new UserHandler();
-    const allUsers = await userHandler.findAllUsers();
-    ctx.response.body = allUsers;
-});
-
 export const userRouter = router.routes();
