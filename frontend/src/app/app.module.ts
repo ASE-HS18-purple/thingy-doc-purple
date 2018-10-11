@@ -11,6 +11,8 @@ import {FormsModule, ReactiveFormsModule} from '@angular/forms';
 import {UserService} from './service/user.service';
 import {HttpClientModule} from '@angular/common/http';
 import { WelcomeComponent } from './welcome/welcome.component';
+import {Authenticate} from './authentication/authenticate';
+import { HomeComponent } from './home/home.component';
 
 
 @NgModule({
@@ -19,10 +21,12 @@ import { WelcomeComponent } from './welcome/welcome.component';
     SignUpComponent,
     LoginComponent,
     NavigationComponent,
-    WelcomeComponent
+    WelcomeComponent,
+    HomeComponent,
   ],
   entryComponents: [
-    SignUpComponent
+    SignUpComponent,
+    LoginComponent,
   ],
   imports: [
     BrowserModule,
@@ -34,6 +38,7 @@ import { WelcomeComponent } from './welcome/welcome.component';
   ],
   providers: [
     UserService,
+    Authenticate,
   ],
   bootstrap: [AppComponent]
 })

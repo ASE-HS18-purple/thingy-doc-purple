@@ -1,6 +1,7 @@
 import { Component, OnInit } from '@angular/core';
 import {SignUpComponent} from '../sign-up/sign-up.component';
 import {NgbModal} from '@ng-bootstrap/ng-bootstrap';
+import {LoginComponent} from '../login/login.component';
 
 @Component({
   selector: 'app-welcome',
@@ -15,6 +16,7 @@ export class WelcomeComponent implements OnInit {
   }
 
   login() {
+    this.modalService.open(LoginComponent, {size: 'lg'});
   }
 
   signUp() {

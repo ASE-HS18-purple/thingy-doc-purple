@@ -7,6 +7,7 @@ const router = new Router();
 
 router.post('/authenticate', async (ctx) => {
     const requestBody = ctx.request.body as any;
+    console.log('REQUEST BODY = ', requestBody);
     const usernameOrEmail: string = requestBody.usernameOrEmail;
     const password: string = requestBody.password;
     // Search the user based on email and (if necessary) username.
@@ -17,13 +18,16 @@ router.post('/authenticate', async (ctx) => {
     // Read the secret key and generate token.
     const secretKey = readConfigFromFile('SECRET_KEY', '../auth-configs');
     const token = await jwt.sign({user}, secretKey);
-    ctx.response.body = {token: token};
+    ctx.response.body = {
+        token: token,
+        user: user,
+    };
 });
 
 const searchUser: any = async (usernameOrEmail: string) => {
     const userHandler = new UserHandler();
     let user: any = await userHandler.searchUserByUsername(usernameOrEmail);
-    user = !user ? await userHandler.findUserByEmail(usernameOrEmail) : null;
+    user = !user ? await userHandler.findUserByEmail(usernameOrEmail) : user;
     return user;
 };
 

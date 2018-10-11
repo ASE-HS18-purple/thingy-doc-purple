@@ -6,10 +6,9 @@ import {readConfigFromFile} from '../util';
  * @param ctx
  * @param next
  */
-const enable = async (ctx: any, next: any) => {
-    const publicApis = readConfigFromFile('PUBLIC_APIS', '../server-configs.json') as string[];
+const enableSecurity = async (ctx: any, next: any) => {
     const originalURI = ctx.originalUrl;
-    if (publicApis.includes(originalURI)) {
+    if (isPublicAPI(originalURI)) {
         await next();
     } else {
         const token = extractToken(ctx);
@@ -19,7 +18,7 @@ const enable = async (ctx: any, next: any) => {
         const secretKey = readConfigFromFile('SECRET_KEY', '../auth-configs.json');
         const user = await jwt.verify(token, secretKey);
         console.log('Decoded token = ', user);
-        ctx.user = user;
+        ctx.state.user = user;
         await next();
     }
 };
@@ -30,4 +29,17 @@ function extractToken(ctx: any): string {
     return token;
 }
 
-export {enable as enableSecurity} ;
+function isPublicAPI(api: string): boolean {
+    let isPublic: boolean = false;
+    const publicApis: string[] = readConfigFromFile('PUBLIC_APIS', '../server-configs.json') as string [];
+    for (const pubApi of publicApis) {
+        const matched = api.startsWith(pubApi);
+        if (matched) {
+            isPublic = true;
+            break;
+        }
+    }
+    return isPublic;
+}
+
+export {enableSecurity} ;
