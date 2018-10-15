@@ -18,9 +18,10 @@ export class UnauthorizedRespInterceptor implements HttpInterceptor {
   intercept(req: HttpRequest<any>, next: HttpHandler): Observable<HttpEvent<any>> {
     return next.handle(req).pipe(catchError(err => {
       if (err.status === 401) {
-        console.log('***NOT AUTHORIZED***');
         this.authService.logOut();
-        location.reload(true);
+        if (err.url && !(err.url as string).endsWith('authenticate')) {
+          window.location.replace('');
+        }
       }
       const error = err.error.message || err.statusText;
       return throwError(error);

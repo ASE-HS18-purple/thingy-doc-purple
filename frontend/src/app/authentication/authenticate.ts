@@ -34,7 +34,6 @@ export class Authenticate {
 
   public currentUser(): AuthModel {
     const currentUser = localStorage.getItem(this.currentUserLocalStorage);
-    console.log(currentUser);
     const user: AuthModel = JSON.parse(currentUser);
     return user;
   }
