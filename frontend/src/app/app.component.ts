@@ -1,4 +1,5 @@
-import { Component } from '@angular/core';
+import {Component} from '@angular/core';
+import {Authenticate} from './authentication/authenticate';
 
 @Component({
   selector: 'app-root',
@@ -6,5 +7,10 @@ import { Component } from '@angular/core';
   styleUrls: ['./app.component.css']
 })
 export class AppComponent {
-  title = 'frontend';
+  private isLoggedIn: boolean;
+
+  constructor(private authService: Authenticate) {
+    this.isLoggedIn = authService.isLoggedIn();
+  }
+
 }
