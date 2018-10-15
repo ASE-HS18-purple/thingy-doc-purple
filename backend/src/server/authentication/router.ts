@@ -16,7 +16,7 @@ router.post('/authenticate', async (ctx) => {
     if (password !== user.password) ctx.throw('The password is not correct!', 401);
     // Read the secret key and generate token.
     const secretKey = readConfigFromFile('SECRET_KEY', '../auth-configs');
-    const token = await jwt.sign({user}, secretKey);
+    const token = await jwt.sign({user}, secretKey , {expiresIn: '2 days'});
     ctx.response.body = {
         token: token,
         user: user,

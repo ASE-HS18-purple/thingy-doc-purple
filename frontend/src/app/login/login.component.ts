@@ -45,7 +45,7 @@ export class LoginComponent implements OnInit {
       window.location.replace('');
     }, error => {
       this.error = true;
-      this.errorMessage = error.error;
+      this.errorMessage = 'Unknown username/email or password';
     });
   }
 

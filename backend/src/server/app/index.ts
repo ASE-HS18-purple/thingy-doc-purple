@@ -12,9 +12,9 @@ const start = async () => {
     const port = readConfigFromFile('SERVER_PORT', '../server-configs');
     console.log('Starting the app...');
     const app = new Koa();
+    app.use(cors());
     app.use(enableSecurity);
     app.use(bodyParser());
-    app.use(cors());
     app.use(routes);
     await app.listen(port);
     console.log(`App is up and running and listening to port: ${port}`);

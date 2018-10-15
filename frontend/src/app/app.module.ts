@@ -9,10 +9,13 @@ import {AppRouting} from './app-routing';
 import {NgbModule} from '@ng-bootstrap/ng-bootstrap';
 import {FormsModule, ReactiveFormsModule} from '@angular/forms';
 import {UserService} from './service/user.service';
-import {HttpClientModule} from '@angular/common/http';
-import { WelcomeComponent } from './welcome/welcome.component';
+import {HTTP_INTERCEPTORS, HttpClientModule} from '@angular/common/http';
+import {WelcomeComponent} from './welcome/welcome.component';
 import {Authenticate} from './authentication/authenticate';
-import { HomeComponent } from './home/home.component';
+import {HomeComponent} from './home/home.component';
+import {AuthGuard} from './guard/auth.guard';
+import {JwtInterceptor} from './guard/JwtInterceptor';
+import {UnauthorizedRespInterceptor} from './guard/UnauthorizedRespInterceptor';
 
 
 @NgModule({
@@ -39,6 +42,9 @@ import { HomeComponent } from './home/home.component';
   providers: [
     UserService,
     Authenticate,
+    AuthGuard,
+    {provide: HTTP_INTERCEPTORS, useClass: JwtInterceptor, multi: true},
+    {provide: HTTP_INTERCEPTORS, useClass: UnauthorizedRespInterceptor, multi: true},
   ],
   bootstrap: [AppComponent]
 })

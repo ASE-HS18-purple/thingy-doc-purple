@@ -4,6 +4,7 @@ import {FormBuilder, FormControl, FormGroup, Validators} from '@angular/forms';
 import {UserModel} from '../model/user.model';
 import {UserService} from '../service/user.service';
 import {Authenticate} from '../authentication/authenticate';
+import {AuthModel} from '../model/auth.model';
 
 @Component({
   selector: 'app-sign-up',
@@ -76,8 +77,10 @@ export class SignUpComponent implements OnInit {
             this.failedToSignUp = false;
             this.userNameAlreadyTaken = false;
             this.emailAlreadyTaken = false;
-            this.auth.authenticate(user.username, user.password);
-            window.location.replace('');
+            this.auth.authenticate(user.username, user.password).subscribe((authModel: AuthModel) => {
+              this.auth.storeTokenAndUser(authModel);
+              window.location.replace('');
+            });
           }, error => {
             // Error when trying to sign up.
             this.failedToSignUp = !this.failedToSignUp;

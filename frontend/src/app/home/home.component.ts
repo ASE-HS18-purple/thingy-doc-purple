@@ -1,6 +1,7 @@
 import {Component, OnInit} from '@angular/core';
 import {UserModel} from '../model/user.model';
 import {AuthModel} from '../model/auth.model';
+import {Authenticate} from '../authentication/authenticate';
 
 @Component({
   selector: 'app-home',
@@ -11,10 +12,8 @@ export class HomeComponent implements OnInit {
 
   private currentUser: AuthModel;
 
-  constructor() {
-    const user = localStorage.getItem('currentUser');
-    this.currentUser = JSON.parse(user);
-    console.log(JSON.stringify(this.currentUser));
+  constructor(private authService: Authenticate) {
+    this.currentUser = this.authService.currentUser();
   }
 
   ngOnInit() {
