@@ -16,7 +16,12 @@ const enableSecurity = async (ctx: any, next: any) => {
             ctx.throw('Not authorized!', 401);
         }
         const secretKey = readConfigFromFile('SECRET_KEY', '../auth-configs.json');
-        const user = await jwt.verify(token, secretKey);
+        let user = null;
+        try {
+            user = await jwt.verify(token, secretKey);
+        } catch (e) {
+            ctx.throw(401, 'Not valid token. Expired token');
+        }
         ctx.state.user = user;
         await next();
     }
