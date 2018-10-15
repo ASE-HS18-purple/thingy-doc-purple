@@ -7,7 +7,6 @@ const router = new Router();
 
 router.post('/authenticate', async (ctx) => {
     const requestBody = ctx.request.body as any;
-    console.log('REQUEST BODY = ', requestBody);
     const usernameOrEmail: string = requestBody.usernameOrEmail;
     const password: string = requestBody.password;
     // Search the user based on email and (if necessary) username.

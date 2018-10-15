@@ -3,6 +3,7 @@ import {NgbActiveModal} from '@ng-bootstrap/ng-bootstrap';
 import {FormBuilder, FormControl, FormGroup, Validators} from '@angular/forms';
 import {UserModel} from '../model/user.model';
 import {UserService} from '../service/user.service';
+import {Authenticate} from '../authentication/authenticate';
 
 @Component({
   selector: 'app-sign-up',
@@ -19,7 +20,7 @@ export class SignUpComponent implements OnInit {
   emailAlreadyTaken = false;
   message: string;
 
-  constructor(public userService: UserService, public activeModal: NgbActiveModal, fb: FormBuilder) {
+  constructor(public userService: UserService, private auth: Authenticate, public activeModal: NgbActiveModal, fb: FormBuilder) {
     this.formBuilder = fb;
   }
 
@@ -75,6 +76,8 @@ export class SignUpComponent implements OnInit {
             this.failedToSignUp = false;
             this.userNameAlreadyTaken = false;
             this.emailAlreadyTaken = false;
+            this.auth.authenticate(user.username, user.password);
+            window.location.replace('');
           }, error => {
             // Error when trying to sign up.
             this.failedToSignUp = !this.failedToSignUp;

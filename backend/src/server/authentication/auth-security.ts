@@ -17,7 +17,6 @@ const enableSecurity = async (ctx: any, next: any) => {
         }
         const secretKey = readConfigFromFile('SECRET_KEY', '../auth-configs.json');
         const user = await jwt.verify(token, secretKey);
-        console.log('Decoded token = ', user);
         ctx.state.user = user;
         await next();
     }

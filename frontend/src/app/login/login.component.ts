@@ -38,7 +38,7 @@ export class LoginComponent implements OnInit {
       const userNameOrEmail = formData.usernameOrEmail;
       const password = formData.password;
       this.authService.authenticate(userNameOrEmail, password);
-    window.location.replace('');
+      window.location.replace('');
   }
 
 }
