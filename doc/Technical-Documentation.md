@@ -1,2 +1,2 @@
 # Table of contents
-* [Authentication](./Authentication.md)
+* [Authentication](./technical/Authentication.md)

@@ -29,9 +29,9 @@ provide in the body of the request the following data:
 ```
 The API will validate the data against the database and will sign the user payload 
 (name, username, email) using our secret key with SHA256 algorithm - which is the
-default hash algorithm of the library that we use (jsonwebtoken -> * [jtw.io](https://jtw.io)) and produces the token which will be returned to the client
+default hash algorithm of the library that we use (jsonwebtoken -> [jtw.io](https://jwt.io)) and produces the token which will be returned to the client
 along with some basic info about the user like: name, username, email. 
-Please review the router that implements the access token generation -> * [Router](../backend/src/server/authentication/router.ts)
+Please review the router that implements the access token generation -> [Router](../../backend/src/server/authentication/router.ts)
 
 
 Another important part of this topic is authenticating the user when hitting our protected APIs. 
@@ -42,4 +42,4 @@ This middleware checks the request and searches for the token in the authorizati
 Once the token is verified it is then decoded and the user payload is returned which in turn is used to validate the data against database. 
 If the validation passes then the request is modified and user payload is attached in **ctx.state.user** and in this way
 we are aware which authenticated user is performing the request and we can access user data performing the request.
-The middleware: * [auth-security.ts](../backend/src/server/authentication/auth-security.ts)
+The middleware: [auth-security.ts](../../backend/src/server/authentication/auth-security.ts)
