@@ -1,4 +1,5 @@
-import { Component, OnInit } from '@angular/core';
+import {Component, OnInit} from '@angular/core';
+import {Authenticate} from '../authentication/authenticate';
 
 @Component({
   selector: 'app-navigation',
@@ -7,9 +8,15 @@ import { Component, OnInit } from '@angular/core';
 })
 export class NavigationComponent implements OnInit {
 
-  constructor() { }
+  constructor(private auth: Authenticate) {
+  }
 
   ngOnInit() {
+  }
+
+  performLogOut() {
+    this.auth.logOut();
+    window.location.replace('');
   }
 
 }
