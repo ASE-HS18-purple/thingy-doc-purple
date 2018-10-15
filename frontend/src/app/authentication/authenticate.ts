@@ -5,7 +5,9 @@ import {AuthModel} from '../model/auth.model';
 @Injectable()
 export class Authenticate {
 
-  url = 'http://localhost:3000/authenticate';
+  private url = 'http://localhost:3000/authenticate';
+  private currentUserLocalStorage = 'currentUser';
+
 
   constructor(public http: HttpClient) {
   }
@@ -18,15 +20,23 @@ export class Authenticate {
   }
 
   public isLoggedIn() {
-    const user = localStorage.getItem('currentUser');
+    const user = localStorage.getItem(this.currentUserLocalStorage);
     return user && user.length > 0;
   }
 
   public logOut() {
-    return localStorage.removeItem('currentUser');
+    return localStorage.removeItem(this.currentUserLocalStorage);
   }
 
   public storeTokenAndUser(authModel: AuthModel) {
-    localStorage.setItem('currentUser', JSON.stringify(authModel));
+    localStorage.setItem(this.currentUserLocalStorage, JSON.stringify(authModel));
   }
+
+  public currentUser(): AuthModel {
+    const currentUser = localStorage.getItem(this.currentUserLocalStorage);
+    console.log(currentUser);
+    const user: AuthModel = JSON.parse(currentUser);
+    return user;
+  }
+
 }

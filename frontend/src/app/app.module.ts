@@ -13,6 +13,7 @@ import {HttpClientModule} from '@angular/common/http';
 import { WelcomeComponent } from './welcome/welcome.component';
 import {Authenticate} from './authentication/authenticate';
 import { HomeComponent } from './home/home.component';
+import {AuthGuard} from './guard/auth.guard';
 
 
 @NgModule({
@@ -39,6 +40,7 @@ import { HomeComponent } from './home/home.component';
   providers: [
     UserService,
     Authenticate,
+    AuthGuard
   ],
   bootstrap: [AppComponent]
 })
