@@ -11,11 +11,9 @@ export class Authenticate {
   }
 
   public authenticate(usernameOrEmail: string, password: string) {
-    this.http.post(this.url, {
+    return this.http.post(this.url, {
       usernameOrEmail: usernameOrEmail,
       password: password,
-    }).subscribe((response: AuthModel) => {
-      localStorage.setItem('currentUser', JSON.stringify(response));
     });
   }
 
@@ -28,4 +26,7 @@ export class Authenticate {
     return localStorage.removeItem('currentUser');
   }
 
+  public storeTokenAndUser(authModel: AuthModel) {
+    localStorage.setItem('currentUser', JSON.stringify(authModel));
+  }
 }
