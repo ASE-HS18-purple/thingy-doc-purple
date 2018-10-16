@@ -2,6 +2,7 @@ import * as cors from '@koa/cors';
 import * as bodyParser from 'koa-bodyparser';
 import * as Koa from 'koa';
 import {enableSecurity} from '../authentication';
+import * as mqttBrokerConnection from '../mqtt-broker-connection';
 
 import {routes} from '../routing';
 import {readConfigFromFile} from '../util';
@@ -19,7 +20,8 @@ const start = async () => {
     await app.listen(port);
     console.log(`App is up and running and listening to port: ${port}`);
     console.log('Initiating database connection');
-    connectToMongoDb();
+    await connectToMongoDb();
+    mqttBrokerConnection.initConnection();
 };
 
 export {start};
