@@ -1,6 +1,6 @@
 <div class="container-fluid">
   <div *ngIf="connectionState === 'Connected'">
-    <span class="badge badge-pill badge-primary">{{connectionState}}</span>
+    <span class="badge badge-pill badge-primary">{{connectionState}} <i class="fa fa-plug"></i></span>
   </div>
   <div *ngIf="connectionState === 'Reconnecting'">
     <span class="badge badge-pill badge-warning">{{connectionState}}</span>

@@ -5,7 +5,6 @@ const router = new Router();
 
 router.get('/state', async (ctx) => {
     const connectionState = await retrieveBrokerConnectionState();
-    console.log('STATE = ', connectionState);
     ctx.response.body = connectionState;
     ctx.status = 200;
 });
