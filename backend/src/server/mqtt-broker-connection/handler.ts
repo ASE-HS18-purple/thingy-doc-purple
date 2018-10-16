@@ -70,7 +70,7 @@ const storeOrUpdateBrokerConnection = async (brokerConnection: any) => {
         // to MQTT broker connection state.
         console.log('Strange situation = ', brokerConnectionState);
         await BrokerConnection.deleteMany({});
-        return brokerConnection.save();
+        return await brokerConnection.save();
     }
 };
 
