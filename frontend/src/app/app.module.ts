@@ -16,6 +16,8 @@ import {HomeComponent} from './home/home.component';
 import {AuthGuard} from './guard/auth.guard';
 import {JwtInterceptor} from './guard/JwtInterceptor';
 import {UnauthorizedRespInterceptor} from './guard/UnauthorizedRespInterceptor';
+import { MqttBrokerConnectionComponent } from './mqtt-broker-connection/mqtt-broker-connection.component';
+import {MqttBrokerConnectionService} from './service/mqtt-broker-connection.service';
 
 
 @NgModule({
@@ -26,6 +28,7 @@ import {UnauthorizedRespInterceptor} from './guard/UnauthorizedRespInterceptor';
     NavigationComponent,
     WelcomeComponent,
     HomeComponent,
+    MqttBrokerConnectionComponent,
   ],
   entryComponents: [
     SignUpComponent,
@@ -45,6 +48,7 @@ import {UnauthorizedRespInterceptor} from './guard/UnauthorizedRespInterceptor';
     AuthGuard,
     {provide: HTTP_INTERCEPTORS, useClass: JwtInterceptor, multi: true},
     {provide: HTTP_INTERCEPTORS, useClass: UnauthorizedRespInterceptor, multi: true},
+    MqttBrokerConnectionService,
   ],
   bootstrap: [AppComponent]
 })

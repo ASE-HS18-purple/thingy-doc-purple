@@ -78,7 +78,7 @@ const storeOrUpdateBrokerConnection = async (brokerConnection: any) => {
  * Get the latest state from database for the broker connection.
  */
 const retrieveBrokerConnectionState = async () => {
-    return await BrokerConnection.find({});
+    return await BrokerConnection.findOne({});
 };
 
 export {initConnection, mqttBrokerClient, retrieveBrokerConnectionState};

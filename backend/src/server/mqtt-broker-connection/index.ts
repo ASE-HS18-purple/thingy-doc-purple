@@ -1,2 +1,2 @@
-export {initConnection} from './handler';
+export {initConnection, mqttBrokerClient} from './handler';
 export * from './router';
