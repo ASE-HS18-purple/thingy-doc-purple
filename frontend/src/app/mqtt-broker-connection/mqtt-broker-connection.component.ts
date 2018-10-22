@@ -15,11 +15,7 @@ export class MqttBrokerConnectionComponent implements OnInit {
   }
 
   ngOnInit() {
-    this.retrieveConnStateRepeatedly();
-  }
-
-  retrieveConnStateRepeatedly() {
-    setTimeout(this.retrieveConnState(), 1000);
+    this.retrieveConnState();
   }
 
   retrieveConnState() {

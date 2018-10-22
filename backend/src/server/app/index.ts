@@ -3,6 +3,7 @@ import * as bodyParser from 'koa-bodyparser';
 import * as Koa from 'koa';
 import {enableSecurity} from '../authentication';
 import * as mqttBrokerConnection from '../mqtt-broker-connection';
+import {handleMessages, subscribeToMqtt} from '../message-handler';
 
 import {routes} from '../routing';
 import {readConfigFromFile} from '../util';
@@ -22,6 +23,8 @@ const start = async () => {
     console.log('Initiating database connection');
     await connectToMongoDb();
     mqttBrokerConnection.initConnection();
+    subscribeToMqtt();
+    handleMessages();
 };
 
 export {start};

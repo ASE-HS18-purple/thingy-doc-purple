@@ -68,7 +68,6 @@ const storeOrUpdateBrokerConnection = async (brokerConnection: any) => {
     } else {
         // We are in a strange situation. This collection should contain only one entry all time - reflecting the
         // to MQTT broker connection state.
-        console.log('Strange situation = ', brokerConnectionState);
         await BrokerConnection.deleteMany({});
         return await brokerConnection.save();
     }

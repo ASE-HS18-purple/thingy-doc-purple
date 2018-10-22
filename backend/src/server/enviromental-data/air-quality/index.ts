@@ -1,0 +1,1 @@
+export {storeAirQuality} from './handler';
