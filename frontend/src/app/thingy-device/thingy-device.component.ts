@@ -31,7 +31,10 @@ export class ThingyDeviceComponent implements OnInit {
   }
 
   openModal() {
-    this.modalService.open(ConfigureThingyDeviceComponent, {size: 'lg'});
+    const configureNewThingyModalRef = this.modalService.open(ConfigureThingyDeviceComponent, {size: 'lg'});
+    configureNewThingyModalRef.componentInstance.reloadTable.subscribe(() => {
+      this.loadThingyDevicesData();
+    });
   }
 
 }
