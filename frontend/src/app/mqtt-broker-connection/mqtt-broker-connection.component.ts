@@ -21,7 +21,6 @@ export class MqttBrokerConnectionComponent implements OnInit {
   retrieveConnState() {
     this.service.retrieveState().subscribe((connection: MqttBrokerConnectionModel) => {
       this.connectionState = connection.state;
-      console.log('Connection state = ', connection);
       setTimeout(this.retrieveConnState(), 1000);
     });
   }
