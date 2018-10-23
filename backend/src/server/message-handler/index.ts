@@ -1,1 +1,1 @@
-export {subscribeToMqtt, handleMessages} from './handler';
+export * from './handler';

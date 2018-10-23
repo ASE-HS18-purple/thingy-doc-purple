@@ -3,46 +3,71 @@ import {storeTemperature} from '../enviromental-data/temperature/index';
 import {storePressure} from '../enviromental-data/pressure/index';
 import {storeHumidity} from '../enviromental-data/humidity';
 import {storeAirQuality} from '../enviromental-data/air-quality';
+import {ThingyDevicesHandler} from '../thingy-devices/handler';
 
-const temperature = 'Qyg1B7_IFpQOA2itdwxMPA/ef680200-9b35-4933-9b10-52ffa9740042/ef680201-9b35-4933-9b10-52ffa9740042';
-const pressure = 'Qyg1B7_IFpQOA2itdwxMPA/ef680200-9b35-4933-9b10-52ffa9740042/ef680202-9b35-4933-9b10-52ffa9740042';
-const humidity = 'Qyg1B7_IFpQOA2itdwxMPA/ef680200-9b35-4933-9b10-52ffa9740042/ef680203-9b35-4933-9b10-52ffa9740042';
-const airQuality = 'Qyg1B7_IFpQOA2itdwxMPA/ef680200-9b35-4933-9b10-52ffa9740042/ef680204-9b35-4933-9b10-52ffa9740042';
+const temperatureCharacteristic = '/ef680200-9b35-4933-9b10-52ffa9740042/ef680201-9b35-4933-9b10-52ffa9740042';
+const pressureCharacteristic = '/ef680200-9b35-4933-9b10-52ffa9740042/ef680202-9b35-4933-9b10-52ffa9740042';
+const humidityCharacteristic = '/ef680200-9b35-4933-9b10-52ffa9740042/ef680203-9b35-4933-9b10-52ffa9740042';
+const airQualityCharacteristic = '/ef680200-9b35-4933-9b10-52ffa9740042/ef680204-9b35-4933-9b10-52ffa9740042';
 
-const subscribeToMqtt = (deviceUri?: string) => {
+const initSubscriptionToMqtt = () => {
     const client = mqttBrokerClient();
-    // TODO: Here you will get from the database the device URIs instead of the hardcoded ones above (in the startup of the system).
-    // TODO: And this method will also be used to subscribe the devices configured via UI.
-    client.subscribe(temperature);
-    client.subscribe(pressure);
-    client.subscribe(humidity);
-    client.subscribe(airQuality);
-    client.on('message', (topic, message) => {
-        if (topic == temperature) {
+    subscribe(client, true);
+};
+
+const subscribeToMqtt = (deviceId: string) => {
+    const client = mqttBrokerClient();
+    subscribe(client, false, deviceId);
+};
+
+const subscribe = async (client: any, init: boolean, deviceId?: string) => {
+    const thingyDeviceHandler = new ThingyDevicesHandler();
+    let device: string;
+    if (init) {
+        // Find all configured devices from database and subscribe to their published events.
+        const thingyDevices = await thingyDeviceHandler.findAllThingyDevices() as any;
+        if (thingyDevices) {
+            thingyDevices.forEach((thingyDevice: any) => {
+                device = thingyDevice.deviceId;
+                const temperatureTopic = device + temperatureCharacteristic;
+                const pressureTopic = device + pressureCharacteristic;
+                const humidityTopic = device + humidityCharacteristic;
+                const airQualityTopic = device + airQualityCharacteristic;
+                client.subscribe(temperatureTopic);
+                client.subscribe(pressureTopic);
+                client.subscribe(humidityTopic);
+                client.subscribe(airQualityTopic);
+            });
+        }
+    } else {
+        device = deviceId;
+        const temperatureTopic = device + temperatureCharacteristic;
+        const pressureTopic = device + pressureCharacteristic;
+        const humidityTopic = device + humidityCharacteristic;
+        const airQualityTopic = device + airQualityCharacteristic;
+        client.subscribe(temperatureTopic);
+        client.subscribe(pressureTopic);
+        client.subscribe(humidityTopic);
+        client.subscribe(airQualityTopic);
+    }
+    handleMessages(client);
+};
+
+const handleMessages = (client: any) => {
+    client.on('message', (topic: string, message: any) => {
+        if (topic.endsWith(temperatureCharacteristic)) {
             storeTemperature(message);
         }
-        if (topic == pressure) {
+        if (topic.endsWith(pressureCharacteristic)) {
             storePressure(message);
         }
-        if (topic == humidity) {
+        if (topic.endsWith(humidityCharacteristic)) {
             storeHumidity(message);
         }
-        if (topic == airQuality) {
+        if (topic.endsWith(airQualityCharacteristic)) {
             storeAirQuality(message);
         }
     });
 };
 
-const handleMessages = () => {
-    const client = mqttBrokerClient();
-    client.on('message', (topic, message) => {
-        if (topic == temperature) {
-            storeTemperature(message);
-        }
-        if (topic == pressure) {
-            storePressure(message);
-        }
-    });
-};
-
-export {subscribeToMqtt, handleMessages};
+export {initSubscriptionToMqtt, subscribeToMqtt};

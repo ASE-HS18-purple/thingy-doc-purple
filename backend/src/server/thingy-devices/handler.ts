@@ -1,4 +1,5 @@
 import {Thingy} from './model';
+import {subscribeToMqtt} from '../message-handler';
 
 export class ThingyDevicesHandler {
 
@@ -27,7 +28,7 @@ export class ThingyDevicesHandler {
             });
             result = await Thingy.findOne({_id: id});
         }
-        // here we should subscribe to events published by mqtt coming from this device.
+        subscribeToMqtt(deviceId);
         return result;
     }
 
@@ -35,6 +36,10 @@ export class ThingyDevicesHandler {
         return await Thingy.find({
             username: username,
         });
+    }
+
+    public async findAllThingyDevices() {
+        return await Thingy.find({});
     }
 
     private async findThingByUsernameAndLocation(username: string, location: string) {
