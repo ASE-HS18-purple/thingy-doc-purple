@@ -1,6 +1,8 @@
 import {Component, OnInit} from '@angular/core';
 import {ThingyDeviceService} from '../service/thingy-device.service';
 import {ThingyDeviceModel} from '../model/thingy-device.model';
+import {NgbModal} from '@ng-bootstrap/ng-bootstrap';
+import {ConfigureThingyDeviceComponent} from './configure-thingy-device/configure-thingy-device.component';
 
 @Component({
   selector: 'app-thingy-device',
@@ -12,7 +14,7 @@ export class ThingyDeviceComponent implements OnInit {
   thingyDevices: ThingyDeviceModel[];
   contactingServer = false;
 
-  constructor(public thingyDeviceService: ThingyDeviceService) {
+  constructor(public thingyDeviceService: ThingyDeviceService, private modalService: NgbModal) {
   }
 
   ngOnInit() {
@@ -23,10 +25,13 @@ export class ThingyDeviceComponent implements OnInit {
     this.contactingServer = true;
     this.thingyDeviceService.getAllThingyDevices()
       .subscribe((data: ThingyDeviceModel[]) => {
-        console.log('DATA = ', data);
         this.thingyDevices = data;
         this.contactingServer = false;
       });
+  }
+
+  openModal() {
+    this.modalService.open(ConfigureThingyDeviceComponent, {size: 'lg'});
   }
 
 }
