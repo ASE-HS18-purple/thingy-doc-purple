@@ -15,3 +15,5 @@ the system is able to subscribe to events published by the respective device aut
 A new device can be configured by providing valid data in the following form:
 
 ![Alt text](./Configure%20new%20device.PNG)
+
+User can delete it's own configuration as well as update one (the device id of a configuration).

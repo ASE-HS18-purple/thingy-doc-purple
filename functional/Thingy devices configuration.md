@@ -5,7 +5,7 @@ Basically the part of configuring the thingy devices is automated as much as pos
 circumstance). However, there are a few constraints at this point because our system does not communicate directly
 with thingy devices, but instead the device should be first setup via 
 web bluetooth proxy. After the thingy device is discovered using web bluetooth proxy 
-the device id of thingy is shown and the configuration in our system is done 
+the device id of thingy is shown and the configuration in our system should be done 
 by using that device id.
 
 **Details**
@@ -28,5 +28,9 @@ When assigning the location, the user should be careful when setting up the loca
 In case the user provides a location already configured, the device id related 
 to the provided location will be updated. However, this is a corner case and 
 considering the nature of the location the chances to occur are very low.
+
+In case the device id of any of the thingy devices has changed (typically in system restart)
+the user is responsible for updating the device id of the respective configuration.
+Also, the user can delete the configuration. 
 
 
